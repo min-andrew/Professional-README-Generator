@@ -36,24 +36,59 @@ const questions = [
     }
 ];
 
+const generateREAD = ({ title, description, installation, usage, contribution, test }) =>
+    `# ${title}
+
+## Description
+${description}
+
+## Table of Contents
+* [Installation](#installation)
+
+* [Usage](#usage)
+
+* [License](#license)
+
+* [Contribution](#contribution)
+
+* [Tests](#tests)
+
+* [Questions](#questions)
+        
+## Installation
+${installation}
+
+## Usage
+${usage}
+
+## License
+
+## Contribution
+${contribution}
+
+## Tests
+${test}
+
+## Questions
+`;
+
 // TODO: Create a function to write README file
-function writeToFile() {
+function writeToFile(fileName, data) {
+    fs.appendFile(fileName, data, (err) => err ? console.error(err) : console.log('Done'));
+};
+
+// TODO: Create a function to initialize app
+function init() {
     inquirer
         .prompt(
             questions
         )
-        .then((response) =>
-            fs.appendFile('log.txt', JSON.stringify(response.title), (err) => err ? console.error(err) : console.log('Done')
-            )
+        .then((response) => {
+            const READinfo = (generateREAD(response));
+            writeToFile('README2.md', READinfo);
+        }
         );
-}
-
-// TODO: Create a function to initialize app
-function init() {
-    writeToFile();
 };
 
 // Function call to initialize app
 init();
-
-// fileName, data
